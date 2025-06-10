@@ -154,6 +154,16 @@ class ElxInteractions {
   }
 
 
+  async walletAGetTokenOwner(tokenId: number) {
+    try {
+      const tokenOwner = await walletAElxContract.ownerOf(tokenId)
+      console.log("Token owner:", tokenOwner)
+    } catch (error) {
+      console.error("Error fetching owner:", error)
+    }
+  }
+
+
   async walletBGetTokenOwner(tokenId: number) {
     try {
       const tokenOwner = await walletBElxContract.ownerOf(tokenId)
