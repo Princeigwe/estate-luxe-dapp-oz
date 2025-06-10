@@ -55,6 +55,3 @@ Ensure your `METAMASK_PRIVATE_KEY` has Sepolia ETH for gas fees.
 
 A contract has been deployed to Sepolia at the following address:
 `0xDB9e357C15306f04cD2E2F6a7ed2035aCab5d103`
-
-### Solidity Version
-This project uses Solidity version `0.8.28`.
