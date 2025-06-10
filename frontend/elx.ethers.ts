@@ -75,9 +75,9 @@ class ElxInteractions {
     }
   }
 
-  async walletACreateListing(location: string, description: string, price: number, image: string) {
+  async walletACreateListing(location: string, description: string, price: number, image: string, tokenCid: string) {
     try {
-      const createListing = await walletAElxContract.createListing(location, description, price, image)
+      const createListing = await walletAElxContract.createListing(location, description, price, image, tokenCid)
       console.log("Listing minted:", createListing)
     } catch (error) {
       console.error("Failed to create realty listing:", error)
@@ -163,6 +163,15 @@ class ElxInteractions {
     }
   }
 
+  async getTokenUri(tokenId: number) { 
+    try {
+      const uri = await walletAElxContract.getTokenUri(tokenId)
+      console.log("Token uri: ", uri)
+    } catch (error) {
+      console.error("Error setting token uri:", error)
+    }
+  }
+
 }
 
 const elxInteractions = new ElxInteractions();
@@ -174,11 +183,12 @@ const location = "Califonia, US"
 const description = "white and brown concrete building under blue sky during daytime"
 const nftImage = "ipfs://bafybeihq27jrbhh4kmaeruqej7nld267p6ojayw7f5z5m7qrx65glxzkqq"
 const tokenCid = "bafkreif67z5t3wwrtyr2b4ice7o5qzxdcaa3apgxwnfeui43qembigmdua"
+const tokenUri = "ipfs://bafkreif67z5t3wwrtyr2b4ice7o5qzxdcaa3apgxwnfeui43qembigmdua"
 const ethPrice = 3
 
-// elxInteractions.walletACreateListing(location, description, ethPrice, nftImage)
+// elxInteractions.walletACreateListing(location, description, ethPrice, nftImage, tokenCid)
 
-elxInteractions.walletAGetMyRealties()
+// elxInteractions.walletAGetMyRealties()
 // elxInteractions.walletBGetMyRealties()
 
 // elxInteractions.walletBBuyListing(0, 5)
@@ -188,3 +198,5 @@ elxInteractions.walletAGetMyRealties()
 // elxInteractions.walletAGetRealtyTxns(0)
 
 // elxInteractions.walletBGetTokenOwner(0)
+
+elxInteractions.getTokenUri(0);

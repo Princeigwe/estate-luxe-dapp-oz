@@ -272,6 +272,19 @@ export const elxContractABI = [
       "anonymous": false,
       "inputs": [
         {
+          "indexed": false,
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        }
+      ],
+      "name": "TokenMetadata",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
           "indexed": true,
           "internalType": "address",
           "name": "from",
@@ -363,6 +376,11 @@ export const elxContractABI = [
         {
           "internalType": "string",
           "name": "_image",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_tokenCid",
           "type": "string"
         }
       ],
@@ -473,6 +491,25 @@ export const elxContractABI = [
           "internalType": "struct EstateLuxeOZepp.RealtyTxn[]",
           "name": "",
           "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getTokenUri",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
         }
       ],
       "stateMutability": "view",
@@ -666,6 +703,24 @@ export const elxContractABI = [
         }
       ],
       "name": "setApprovalForAll",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "_tokenId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "_tokenCid",
+          "type": "string"
+        }
+      ],
+      "name": "setTokenUri",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

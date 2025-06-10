@@ -2,10 +2,11 @@
 pragma solidity ^0.8.20;
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import {ERC721URIStorage} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 // import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 
-contract EstateLuxeOZepp is ERC721{
+contract EstateLuxeOZepp is ERC721 {
 
   struct Realty {
     uint256 tokenId;
@@ -49,6 +50,9 @@ contract EstateLuxeOZepp is ERC721{
     bool isForSale
   );
 
+  event TokenMetadata(
+    string description
+  );
 
   Realty[] public realties;
 
@@ -69,6 +73,8 @@ contract EstateLuxeOZepp is ERC721{
   // returns a list of realty transactions that has occurred, by its token id 
   mapping(uint256 => RealtyTxn[]) realtyTxns;
 
+  mapping(uint256 => string) _tokenUri;
+
   uint256 tokenIndex;
 
   constructor()  
@@ -82,8 +88,9 @@ contract EstateLuxeOZepp is ERC721{
     string memory _location, 
     string memory _description, 
     uint256 _price,
-    string memory _image
-  )public {
+    string memory _image,
+    string memory _tokenCid
+  )public{
     require(bytes(_location).length > 0, "Location must not be empty");
     require(bytes(_description).length > 0, "Description must not be empty");
     require(_price > 0, "Price must not be empty");
@@ -101,14 +108,15 @@ contract EstateLuxeOZepp is ERC721{
     realtyProperty[tokenIndex]=realty;
     realties.push(realty);
     _safeMint(msg.sender, tokenIndex);
+    setTokenUri(tokenIndex, _tokenCid);
     _tokenOwner[tokenIndex] = payable(msg.sender);
     _ownedTokensCount[payable(msg.sender)] += 1;
-
     tokenIndex++;
 
     emit RealtyListed(realty.tokenId, realty.location, realty.description, realty.price, realty.owner, realty.isForSale, realty.image);
     emit Transfer(address(0), payable(msg.sender), tokenIndex);
   }
+
 
   function buyRealty(uint256 tokenId) payable public{
     require(_tokenOwner[tokenId] != address(0), "Token does not exist");
@@ -201,6 +209,17 @@ contract EstateLuxeOZepp is ERC721{
       _owner, 
       _isForSale
     );
+  }
+
+  function setTokenUri(uint256 _tokenId, string memory _tokenCid)public{
+    string memory baseUri = "ipfs://";
+    string memory tokenUri = string(abi.encodePacked(baseUri, _tokenCid));
+    _tokenUri[_tokenId] = tokenUri;
+  }
+
+  function getTokenUri(uint256 _tokenId)public view returns(string memory){
+    require(_tokenOwner[_tokenId] != address(0), "NFT does not exist");
+    return _tokenUri[_tokenId];
   }
 
 }
