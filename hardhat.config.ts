@@ -22,9 +22,3 @@ const config: HardhatUserConfig = {
 export default config;
 
 
-
-// i ran these command to set the necessary env variables
-// npx hardhat vars set INFURA_API_KEY
-// npx hardhat vars set METAMASK_PRIVATE_KEY
-
-// contract address: 0xDB9e357C15306f04cD2E2F6a7ed2035aCab5d103
